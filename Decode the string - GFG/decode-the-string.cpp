@@ -21,7 +21,7 @@ public:
                 idx++;
                 string temp = decode(s, idx);
                 while(times--) word += temp;
-                times = 0;
+               times = 0;
             }
             else if(s[idx] == ']')
                 return word;
