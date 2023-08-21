@@ -40,7 +40,7 @@ public:
                 for(int k=-1;k<=1;k++){
                     int index1=row+l;
                     int index2=col+k;
-                    if(index1==row and index2==col)continue;
+                    //if(index1==row and index2==col)continue;
                     if(check(matrix,index1,index2,n,m)){
                         zero++;
                     }
