@@ -9,68 +9,74 @@ using namespace std;
 
 class Solution{
 public:
-
-       bool check(vector<vector<char>>& board,vector<vector<int>>&vis,int start,int end,int n,int m){
-       if(start>=0 && end>=0 && end<m && start<n && board[start][end]=='O' && !vis[start][end])return true;
-
-       return false;
-   }
-
-
-
-    void dfs(vector<vector<char>>& board,vector<vector<int>>&vis,int start,int end,int n,int m){
-
-        vis[start][end]=1;
-        int arr1[]={1,-1,0,0};
-        int arr2[]={0,0,1,-1};
-        for(int i=0;i<4;i++){
-            int n1=start+arr1[i];
-            int n2=end +arr2[i];
-            if(check(board,vis,n1,n2,n,m)){
-                dfs(board,vis,n1,n2,n,m);
-            }
+    bool check(int start,int end,int n, int m, vector<vector<char>>& mat,vector<vector<int>>&vis){
+        
+        if(start>=0 and end>=0 and start<n and end<m and mat[start][end]=='O' and !vis[start][end]){
+            return true;
         }
-
+        return false;
     }
 
-    vector<vector<char>> fill(int n, int m, vector<vector<char>> board)
+    void dfs(int start,int end,int n, int m, vector<vector<char>>& mat,vector<vector<int>>&vis){
+        
+        vis[start][end]=1;
+        
+        int arr1[4]={-1,1,0,0};
+        int arr2[4]={0,0,-1,1};
+        
+        for(int i=0;i<4;i++){
+            int x1=start+arr1[i];
+            int x2=end+arr2[i];
+            
+            if(check(x1,x2,n,m,mat,vis)){
+                dfs(x1,x2,n,m,mat,vis);
+            }
+        }
+        
+    }
+
+
+    vector<vector<char>> fill(int n, int m, vector<vector<char>> mat)
     {
         
         vector<vector<int>>vis(n,vector<int>(m,0));
         
-        
         for(int i=0;i<n;i++){
-            if(board[i][0]=='O' && !vis[i][0]){
-                dfs(board,vis,i,0,n,m);
+            if(mat[i][0]=='O' and !vis[i][0]){
+                dfs(i,0,n,m,mat,vis);
             }
         }
         for(int i=0;i<n;i++){
-            if(board[i][m-1]=='O' && !vis[i][m-1]){
-                dfs(board,vis,i,m-1,n,m);
+            if(mat[i][m-1]=='O' and !vis[i][m-1]){
+                dfs(i,m-1,n,m,mat,vis);
             }
         }
         for(int i=0;i<m;i++){
-            if(board[0][i]=='O' && !vis[0][i]){
-                dfs(board,vis,0,i,n,m);
+            if(mat[n-1][i]=='O' and !vis[n-1][i]){
+                dfs(n-1,i,n,m,mat,vis);
             }
         }
-         for(int i=0;i<m;i++){
-            if(board[n-1][i]=='O' && !vis[n-1][i]){
-                dfs(board,vis,n-1,i,n,m);
+        for(int i=0;i<m;i++){
+            if(mat[0][i]=='O' and !vis[0][i]){
+                dfs(0,i,n,m,mat,vis);
             }
         }
-
-
+        
         for(int i=0;i<n;i++){
             for(int j=0;j<m;j++){
-                if(board[i][j]=='O' && !vis[i][j]){
-                    board[i][j]='X';
+                if(mat[i][j]=='O' and !vis[i][j]){
+                    mat[i][j]='X';
                 }
             }
         }
-    return board;
+        
+        
+        return mat;
+        
     }
 };
+
+
 
 
 //{ Driver Code Starts.
